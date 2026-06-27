@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CapaPresentacion.MainActivity"
+    android:orientation="vertical"
+    android:background="@drawable/fondo_degradado"
+    android:gravity="center">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_inicio"
+        android:padding="15dp"
+        android:background="@drawable/circulo_transparente"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_title"
+        android:layout_marginTop="80dp"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_subtitle"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoogle"
+        android:layout_width="280dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/btn_google_login"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textAlignment="textStart"
+        app:icon="@drawable/ic_google"
+        app:iconGravity="textStart"
+        app:iconPadding="8dp"
+        app:iconTint="@null"
+        app:cornerRadius="15dp" />
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:text="@string/welcome_disclaimer"
+        android:textSize="13sp" />
+
+</LinearLayout>

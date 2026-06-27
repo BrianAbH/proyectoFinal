@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">proyectoFinal</string>
+
+    <!--Pantalla de Bienvenida-->
+    <string name="welcome_title">MoodleApp</string>
+    <string name="welcome_subtitle">Tu campus virtual en tu bolsillo</string>
+    <string name="btn_google_login">Iniciar sesión con Google</string>
+    <string name="welcome_disclaimer">Al iniciar sesión, aceptas nuestros términos y condiciones</string>
+
+
+    <!--Lista de Cursos-->
+    <string name="greeting_hello">Hola, %1$s 👋</string>
+    <string name="courses_subtitle">Tus cursos matriculados</string>
+    <string name="course_not_found">Curso no encontrado</string>
+
+</resources>
