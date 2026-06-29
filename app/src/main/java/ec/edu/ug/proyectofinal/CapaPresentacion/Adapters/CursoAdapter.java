@@ -13,19 +13,19 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
 import ec.edu.ug.proyectofinal.R;
 
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
 
-    private List<Cursos> listaCursos;
+    private List<UserCourse> listaCursos;
     private OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        void onItemClick(Cursos curso);
+        void onItemClick(UserCourse curso);
     }
 
-    public CursoAdapter(List<Cursos> listaCursos/*, OnItemClickListener listener*/) {
+    public CursoAdapter(List<UserCourse> listaCursos/*, OnItemClickListener listener*/) {
         this.listaCursos = listaCursos;
         //this.listener = listener;
     }
@@ -42,11 +42,11 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        Cursos curso = listaCursos.get(position);
+        UserCourse curso = listaCursos.get(position);
 
         holder.tvNombre.setText(curso.getFullname());
         holder.tvCodigo.setText(curso.getShortname());
-        //holder.tvDocente.setText(curso.getDocente());
+        holder.tvDocente.setText(curso.getTeacherName());
 
         //holder.headerCurso.setBackgroundColor(curso.getColor());
 
@@ -67,7 +67,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
 
         TextView tvNombre;
         TextView tvCodigo;
-        //TextView tvDocente;
+        TextView tvDocente;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,7 +77,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
 
             tvNombre = itemView.findViewById(R.id.tvNombre);
             tvCodigo = itemView.findViewById(R.id.tvCodigo);
-            //tvDocente = itemView.findViewById(R.id.tvDocente);
+            tvDocente = itemView.findViewById(R.id.tvDocente);
         }
     }
 }

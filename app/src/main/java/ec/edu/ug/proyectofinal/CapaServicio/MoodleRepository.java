@@ -1,7 +1,9 @@
 package ec.edu.ug.proyectofinal.CapaServicio;
 
 import java.util.Arrays;
-import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos;
+
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.TeacherCourseResponse;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
 import ec.edu.ug.proyectofinal.CapaServicio.Listener.ApiListener;
 import ec.edu.ug.proyectofinal.CapaServicio.Network.RetrofitClient;
@@ -22,7 +24,9 @@ public class MoodleRepository {
                 if(response.isSuccessful() && response.body()!=null){
                     listener.onSuccess(response.body());
 
-                }else{listener.onError("Error " + response.code());}
+                }else{
+                    listener.onError("Error " + response.code());
+                }
             }
 
             @Override
@@ -33,9 +37,9 @@ public class MoodleRepository {
     }
 
     public void obtenerCursos(String token, int userId, ApiListener listener){
-        api.getCourseData(token, "core_enrol_get_users_courses", "json", userId).enqueue(new Callback<Cursos[]>() {
+        api.getCourseData(token, "core_enrol_get_users_courses", "json", userId).enqueue(new Callback<UserCourse[]>() {
             @Override
-            public void onResponse(Call<Cursos[]> call, Response<Cursos[]> response) {
+            public void onResponse(Call<UserCourse[]> call, Response<UserCourse[]> response) {
                 if(response.isSuccessful() && response.body()!=null){
                     listener.onSuccess(Arrays.asList(response.body()));
                 }else{
@@ -44,12 +48,29 @@ public class MoodleRepository {
             }
 
             @Override
-            public void onFailure(Call<Cursos[]> call, Throwable t) {
+            public void onFailure(Call<UserCourse[]> call, Throwable t) {
                 listener.onError(t.getMessage());
             }
 
         });
 
+    }
+
+    public void obtenerCursosTeacher(String token, int courseId, ApiListener<TeacherCourseResponse> listener){
+        api.getCourseTeacher(token, "core_course_get_courses_by_field", "json", "id", courseId).enqueue(new Callback<TeacherCourseResponse>() {
+            @Override
+            public void onResponse(Call<TeacherCourseResponse> call, Response<TeacherCourseResponse> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    listener.onSuccess(response.body());
+                } else {
+                    listener.onError("Error " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<TeacherCourseResponse> call, Throwable t) {
+                listener.onError(t.getMessage());
+            }
+        });
     }
 
 }
