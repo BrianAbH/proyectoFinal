@@ -1,6 +1,5 @@
 plugins {
     id("com.android.application")
-
 }
 
 android {
@@ -43,13 +42,15 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.googleid)
     implementation(libs.play.services.auth)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation("androidx.credentials:credentials:1.3.0")
-    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
-    implementation("com.google.firebase:firebase-auth:23.0.0") // O la versión actual de tu proyecto
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    implementation("androidx.browser:browser:1.10.0")
+
 
 }

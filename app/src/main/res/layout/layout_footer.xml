@@ -20,6 +20,12 @@
             app:cardElevation="0dp"
             app:cardCornerRadius="0dp"
             app:cardMaxElevation="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:checkable="true"
+            app:cardBackgroundColor="@color/card_color_selector"
+            app:strokeColor="#FFCCCCCC"
+            app:strokeWidth="1dp"
             app:cardPreventCornerOverlap="false"
             app:contentPadding="0dp">
 
@@ -49,6 +55,12 @@
             app:cardElevation="0dp"
             app:cardCornerRadius="0dp"
             app:cardMaxElevation="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:checkable="true"
+            app:cardBackgroundColor="@color/card_color_selector"
+            app:strokeColor="#FFCCCCCC"
+            app:strokeWidth="1dp"
             app:cardPreventCornerOverlap="false"
             app:contentPadding="0dp">
 
@@ -61,13 +73,13 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_curso"
+                    android:src="@drawable/ic_profile"
                     android:contentDescription="@string/welcome_title"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Perfil"/>
+                    android:text="@string/profile_text"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

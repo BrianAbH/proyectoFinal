@@ -13,4 +13,7 @@
     <string name="courses_subtitle">Tus cursos matriculados</string>
     <string name="course_not_found">Curso no encontrado</string>
 
+
+    <!--Footer-->
+    <string name="profile_text">Perfil</string>
 </resources>
