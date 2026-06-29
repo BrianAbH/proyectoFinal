@@ -1,5 +1,7 @@
 package ec.edu.ug.proyectofinal.CapaPresentacion.Adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
+import ec.edu.ug.proyectofinal.CapaPresentacion.DetalleCursoActivity;
 import ec.edu.ug.proyectofinal.R;
 
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
@@ -48,11 +51,14 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
         holder.tvCodigo.setText(curso.getShortname());
         holder.tvDocente.setText(curso.getTeacherName());
 
-        //holder.headerCurso.setBackgroundColor(curso.getColor());
-
-        /*holder.cardCurso.setOnClickListener(v ->
-                listener.onItemClick(curso)
-        );*/
+        holder.itemView.setOnClickListener(v->{
+            Context contexto = v.getContext();
+            Intent iDetalle = new Intent(contexto, DetalleCursoActivity.class);
+            iDetalle.putExtra("fullname",curso.getFullname());
+            iDetalle.putExtra("shortname",curso.getShortname());
+            iDetalle.putExtra("teacher",curso.getTeacherName());
+            contexto.startActivity(iDetalle);
+        });
     }
 
     @Override

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/detalle"
+    android:background="@color/background">
+
+    <!-- Encabezado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimary"
+        android:padding="20dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:id="@+id/txtNombreCurso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/course_name"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/txtShortName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/course_code"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_profile"
+                app:tint="@android:color/white" />
+
+            <TextView
+                android:id="@+id/txtProfesor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/course_teacher"
+                android:textColor="@android:color/white"
+                android:textSize="13sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Tabs -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        app:tabGravity="fill"
+        app:tabMode="fixed"
+        app:tabIndicatorColor="@color/colorPrimary"
+        app:tabIndicatorHeight="3dp"
+        app:tabSelectedTextColor="@color/colorPrimary"
+        app:tabTextColor="@color/tabGray">
+
+        <com.google.android.material.tabs.TabItem
+            android:icon="@drawable/ic_assignment"
+            android:text="@string/tab_tasks"
+            android:layout_height="@null"
+            android:layout_width="@null"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:icon="@drawable/ic_forum"
+            android:text="@string/tab_forums"
+            android:layout_height="@null" android:layout_width="@null"/>
+
+        <com.google.android.material.tabs.TabItem
+            android:icon="@drawable/ic_folder"
+            android:text="@string/tab_resources"
+            android:layout_height="@null" android:layout_width="@null"/>
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <!-- Contenido -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvContenido"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="12dp"/>
+
+</LinearLayout>

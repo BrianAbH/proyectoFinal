@@ -33,4 +33,8 @@
     <!-- Ripple -->
     <color name="ripple_color">#33FFFFFF</color>
 
+    <color name="colorPrimary">#FF6A3D</color>
+    <color name="background">#F5F5F5</color>
+    <color name="tabGray">#9E9E9E</color>
+
 </resources>
