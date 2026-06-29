@@ -16,6 +16,7 @@
 
     <!--Footer-->
     <string name="profile_text">Perfil</string>
+    <string name="profile_title">Mi Perfil</string>
 
     <string name="course_name">Programación&#10;Avanzada</string>
     <string name="course_code">PROG-ADV-2025</string>
