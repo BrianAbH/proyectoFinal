@@ -34,8 +34,8 @@ public class MoodleAuthManager {
 
             String[] moodleParts = decodedString.split(MOODLE_DELIMITER);
             if (moodleParts.length >= 2) {
-                String wsToken = moodleParts[1]; // El segundo elemento es el token usable
-                Log.d(TAG, "¡Token extraído con éxito de la clase independiente! " + wsToken);
+                String wsToken = moodleParts[1];
+                Log.d(TAG, "¡Token extraído con éxito de la clase independiente!");
                 return wsToken;
             } else {
                 Log.e(TAG, "La estructura decodificada de Moodle no tiene las secciones esperadas.");
@@ -48,11 +48,10 @@ public class MoodleAuthManager {
 
 
     public static void logoutFromApp(android.content.Context context) {
-        // Si estás guardando el token en SharedPreferences (Recomendado):
+
         android.content.SharedPreferences prefs = context.getSharedPreferences("MoodlePrefs", android.content.Context.MODE_PRIVATE);
         prefs.edit().remove("WSTOKEN").apply();
 
-        // Redirigir al usuario al Login (MainActivity)
         android.content.Intent intent = new android.content.Intent(context, MainActivity.class);
         intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);

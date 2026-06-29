@@ -5,7 +5,6 @@ public class Cursos {
     private int id;
     private String fullname;
     private String shortname;
-    private String idnumber;
 
 
     public int getId() {
@@ -32,11 +31,5 @@ public class Cursos {
         this.shortname = shortname;
     }
 
-    public String getIdnumber() {
-        return idnumber;
-    }
 
-    public void setIdnumber(String idnumber) {
-        this.idnumber = idnumber;
-    }
 }

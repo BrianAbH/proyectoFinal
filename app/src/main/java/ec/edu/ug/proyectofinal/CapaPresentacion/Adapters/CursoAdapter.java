@@ -45,7 +45,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
         Cursos curso = listaCursos.get(position);
 
         holder.tvNombre.setText(curso.getFullname());
-        holder.tvCodigo.setText(String.valueOf(curso.getIdnumber()));
+        holder.tvCodigo.setText(curso.getShortname());
         //holder.tvDocente.setText(curso.getDocente());
 
         //holder.headerCurso.setBackgroundColor(curso.getColor());

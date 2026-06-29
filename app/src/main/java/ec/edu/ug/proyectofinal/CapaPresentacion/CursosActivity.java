@@ -13,53 +13,82 @@ import java.util.List;
 import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.CursoAdapter;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
-import ec.edu.ug.proyectofinal.CapaServicio.MoodleCursos;
+import ec.edu.ug.proyectofinal.CapaServicio.Listener.ApiListener;
+import ec.edu.ug.proyectofinal.CapaServicio.MoodleRepository;
 import ec.edu.ug.proyectofinal.R;
 
 
 public class CursosActivity extends AppCompatActivity {
 
-    private TextView txtNombre,txt;
+    private TextView txtNombre;
     private RecyclerView recyclerView;
+    private MoodleRepository repository;
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_curso);
 
+        inicializarComponentes();
+
+        repository = new MoodleRepository();
+
+        cargarUsuario(
+                getIntent().getStringExtra("WSTOKEN")
+        );
+
+    }
+
+    private void inicializarComponentes() {
         txtNombre = findViewById(R.id.txtNombre);
         recyclerView = findViewById(R.id.rvCursos);
-        recyclerView.setLayoutManager(new GridLayoutManager(CursosActivity.this, 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+    }
 
-        String tk = getIntent().getStringExtra("WSTOKEN");
-        MoodleCursos moodleCurso = new MoodleCursos();
-
-        moodleCurso.obtenerUsuario(tk, new MoodleCursos.MoodleUserListener() {
+    private void cargarUsuario(String token){
+        repository.obtenerUsuario(token, new ApiListener<User>() {
             @Override
-            public void onUserReceived(User usuario) {
-                String saludo_nombre = getString(R.string.greeting_hello,usuario.getFirstname());
-                txtNombre.setText(saludo_nombre);
-                moodleCurso.obtenerCursos(tk,usuario.getUserid(), new MoodleCursos.MoodleCursoListener() {
-                    @Override
-                    public void onCursosReceived(List<Cursos> cursos) {
-                        CursoAdapter adapter = new CursoAdapter(cursos);
-                        recyclerView.setAdapter(adapter);
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        txtNombre.setText("Error al cargar datos");
-                    }
-                });
+            public void onSuccess(User data) {
+                mostrarNombre(data);
+                cargarCursos(token, data.getUserid());
             }
             @Override
             public void onError(String error) {
-                txtNombre.setText("Error al cargar datos");
+                mostrarError();
+
+            }
+        });
+    }
+
+    private void cargarCursos(String token,int userId){
+        repository.obtenerCursos(token, userId, new ApiListener<List<Cursos>>() {
+            @Override
+            public void onSuccess(List<Cursos> data) {
+                mostrarCursos(data);
+            }
+
+            @Override
+            public void onError(String error) {
+                mostrarError();
             }
         });
 
+    }
 
+    private void mostrarNombre(User usuario){
+        String saludo = getString(R.string.greeting_hello, usuario.getFirstname());
+        txtNombre.setText(saludo);
+    }
 
+    private void mostrarCursos(List<Cursos> cursos){
+        CursoAdapter adapter = new CursoAdapter(cursos);
+        recyclerView.setAdapter(adapter);
+    }
 
+    private void mostrarError(){
+        txtNombre.setText("Error al cargar datos");
     }
 
 

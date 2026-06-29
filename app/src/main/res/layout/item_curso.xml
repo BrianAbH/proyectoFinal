@@ -4,14 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardCurso"
     android:layout_width="match_parent"
-    android:layout_height="260dp"
+    android:layout_height="280dp"
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="16dp"
     app:cardElevation="6dp"
-    app:rippleColor="@color/code_orange">
+    app:rippleColor="@color/ripple_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +23,14 @@
             android:id="@+id/headerCurso"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="#FF6A33"
+            android:background="@color/curso_naranja"
             android:gravity="center">
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_inicio"
+                android:contentDescription="@string/app_name"
                 app:tint="@color/white" />
         </LinearLayout>
 
@@ -43,20 +44,18 @@
 
             <TextView
                 android:id="@+id/tvNombre"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Programación Avanzada"
                 android:textColor="#2C2C2C"
                 android:textStyle="bold"
                 android:textSize="20sp"
-                android:maxLines="2"/>
+                android:maxLines="3"/>
 
             <TextView
                 android:id="@+id/tvCodigo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="PROG-ADV-2025"
                 android:textColor="#FF6A33"
                 android:textSize="13sp"/>
 
@@ -78,7 +77,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
-                    android:text="Dr. Carlos Mendoza"
                     android:textColor="#707070"
                     android:textSize="13sp"
                     android:maxLines="2"/>
