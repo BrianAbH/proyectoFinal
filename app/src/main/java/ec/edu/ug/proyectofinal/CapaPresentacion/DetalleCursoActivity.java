@@ -15,16 +15,9 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
-import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
-import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.CursoAdapter;
 import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.RecursoAdapter;
 import ec.edu.ug.proyectofinal.CapaServicio.Listener.ApiListener;
 import ec.edu.ug.proyectofinal.CapaServicio.MoodleRepository;
