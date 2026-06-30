@@ -79,7 +79,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intentCursos);
         finish();
     }
-
-
-
 }

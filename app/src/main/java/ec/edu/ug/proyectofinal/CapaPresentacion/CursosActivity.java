@@ -1,14 +1,16 @@
 package ec.edu.ug.proyectofinal.CapaPresentacion;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
-
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.TeacherCourseResponse;
 import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.CursoAdapter;
@@ -26,6 +28,8 @@ public class CursosActivity extends AppCompatActivity {
     private List<UserCourse> listaCursos;
     private CursoAdapter cursoAdapter;
 
+    private CardView btnCurso, btnPerfil;
+    private User usuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,6 +39,14 @@ public class CursosActivity extends AppCompatActivity {
         repository = new MoodleRepository();
         cargarUsuario(getIntent().getStringExtra("WSTOKEN"));
 
+        btnPerfil = findViewById(R.id.btnPerfil);
+        btnPerfil.setOnClickListener(v->{
+            Intent iPerfil = new Intent(CursosActivity.this, PerfilActivity.class);
+            iPerfil.putExtra("nombre", usuario.getUsername());
+            iPerfil.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            startActivity(iPerfil);
+            overridePendingTransition(0, 0);
+        });
     }
 
     private void inicializarComponentes() {
@@ -48,6 +60,7 @@ public class CursosActivity extends AppCompatActivity {
             @Override
             public void onSuccess(User data) {
                 mostrarNombre(data);
+                usuario = data;
                 cargarCursos(token, data.getUserid());
             }
             @Override
@@ -103,21 +116,16 @@ public class CursosActivity extends AppCompatActivity {
         });
     }
 
-
-
     private void mostrarNombre(User usuario){
         String saludo = getString(R.string.greeting_hello, usuario.getFirstname());
         txtNombre.setText(saludo);
     }
 
-    private void mostrarCursos(List<UserCourse> cursos){
-        CursoAdapter adapter = new CursoAdapter(cursos);
-        recyclerView.setAdapter(adapter);
-    }
 
     private void mostrarError(){
         txtNombre.setText("Error al cargar datos");
     }
+
 
 
 }

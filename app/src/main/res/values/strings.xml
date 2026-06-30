@@ -25,4 +25,6 @@
     <string name="tab_tasks">Tareas</string>
     <string name="tab_forums">Foros</string>
     <string name="tab_resources">Recursos</string>
+
+    <string name="close_sesion">Cerrar Sesion</string>
 </resources>

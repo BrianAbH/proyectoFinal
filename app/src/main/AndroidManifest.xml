@@ -15,6 +15,7 @@
         android:theme="@style/Theme.ProyectoFinal">
         <activity android:name=".CapaPresentacion.CursosActivity"/>
         <activity android:name=".CapaPresentacion.DetalleCursoActivity"/>
+        <activity android:name=".CapaPresentacion.PerfilActivity"/>
         <activity
             android:name=".CapaPresentacion.MainActivity" android:exported="true">
             <intent-filter>
