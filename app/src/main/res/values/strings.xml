@@ -29,4 +29,10 @@
 
     <string name="close_sesion">Cerrar Sesion</string>
 
+    <string name="contentBack">Volver a la pagina anterior</string>
+    <string name="contentPerfil">Icono de un perfil</string>
+
+    <string name="iconopdf">Icono PDF</string>
+    <string name="pdf">PDF</string>
+
 </resources>

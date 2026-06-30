@@ -54,6 +54,7 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
         holder.itemView.setOnClickListener(v->{
             Context contexto = v.getContext();
             Intent iDetalle = new Intent(contexto, DetalleCursoActivity.class);
+            iDetalle.putExtra("idCourse",curso.getId());
             iDetalle.putExtra("fullname",curso.getFullname());
             iDetalle.putExtra("shortname",curso.getShortname());
             iDetalle.putExtra("teacher",curso.getTeacherName());

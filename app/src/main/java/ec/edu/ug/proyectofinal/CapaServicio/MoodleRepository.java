@@ -1,9 +1,16 @@
 package ec.edu.ug.proyectofinal.CapaServicio;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.TeacherCourseResponse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
 import ec.edu.ug.proyectofinal.CapaServicio.Listener.ApiListener;
 import ec.edu.ug.proyectofinal.CapaServicio.Network.RetrofitClient;
@@ -46,7 +53,6 @@ public class MoodleRepository {
                     listener.onError("Error " + response.code());
                 }
             }
-
             @Override
             public void onFailure(Call<UserCourse[]> call, Throwable t) {
                 listener.onError(t.getMessage());
@@ -69,6 +75,41 @@ public class MoodleRepository {
             @Override
             public void onFailure(Call<TeacherCourseResponse> call, Throwable t) {
                 listener.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void obtenerRecursosCursos(String token, int courseId, ApiListener<List<Recursos.Modulo>> listener) {
+        api.getResourcesCourse(token, "core_course_get_contents", "json", courseId).enqueue(new Callback<List<Recursos.Seccion>>() {
+            @Override
+            public void onResponse(Call<List<Recursos.Seccion>> call, Response<List<Recursos.Seccion>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Recursos.Seccion> secciones = response.body();
+                    List<Recursos.Modulo> soloRecursos = new ArrayList<>();
+                    for (Recursos.Seccion seccion : secciones) {
+                        if ("Recursos".equalsIgnoreCase(seccion.name)) {
+                            if (seccion.modules != null) {
+                                for (Recursos.Modulo modulo : seccion.modules) {
+                                    if ("resource".equalsIgnoreCase(modulo.modname)) {
+                                        soloRecursos.add(modulo);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        listener.onSuccess(soloRecursos);
+                    });
+                } else {
+                    new Handler(Looper.getMainLooper()).post(() -> {
+                        listener.onError("Error del servidor: " + response.code());
+                    });
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Recursos.Seccion>> call, Throwable t) {
+                listener.onError(t.getMessage() != null ? t.getMessage() : "Error de conexión");
             }
         });
     }

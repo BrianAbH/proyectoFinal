@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -20,6 +21,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/contentBack"
             android:src="@drawable/ic_arrow_back"
             app:tint="@color/white" />
 
@@ -47,11 +49,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:contentDescription="@string/contentPerfil"
                 android:src="@drawable/ic_profile"
                 app:tint="@android:color/white" />
 
@@ -93,9 +97,11 @@
             android:layout_height="@null" android:layout_width="@null"/>
 
         <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabRecursos"
             android:icon="@drawable/ic_folder"
             android:text="@string/tab_resources"
-            android:layout_height="@null" android:layout_width="@null"/>
+            android:layout_height="@null"
+            android:layout_width="@null"/>
 
     </com.google.android.material.tabs.TabLayout>
 
