@@ -7,10 +7,14 @@ public class User {
     private String lastname;
     private int userid;
 
+    private String sitename;
+
 
     public String getUsername() { return username; }
     public String getFirstname() { return firstname; }
     public String getLastname() { return lastname; }
     public int getUserid() { return userid; }
+    public String getSitename() {return sitename;}
+
 
 }

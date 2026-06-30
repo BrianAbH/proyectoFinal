@@ -48,7 +48,6 @@ public class MoodleAuthManager {
 
 
     public static void logoutFromApp(android.content.Context context) {
-
         android.content.SharedPreferences prefs = context.getSharedPreferences("SessionPrefs", android.content.Context.MODE_PRIVATE);
         prefs.edit().remove("WSTOKEN").apply();
 
