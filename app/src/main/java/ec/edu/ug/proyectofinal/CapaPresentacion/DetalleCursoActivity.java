@@ -47,11 +47,10 @@ public class DetalleCursoActivity extends AppCompatActivity {
         preferences = getSharedPreferences("SessionPrefs", MODE_PRIVATE);
         token = preferences.getString("WSTOKEN","Valor por defecto");
         moodle = new MoodleRepository();
+
         iniciarComponentes();
         volver();
-        txtNombreCurso.setText(fullname);
-        txtShortName.setText(shortname);
-        txtProfesor.setText(teachername);
+        mostarNombres();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -65,8 +64,8 @@ public class DetalleCursoActivity extends AppCompatActivity {
                             try {
                                 if (data == null) return;
                                 listaRecursos = data;
-                                RecursoAdapter recur = new RecursoAdapter(data);
-                                if (DetalleCursoActivity.this != null && !DetalleCursoActivity.this.isFinishing()) {
+                                RecursoAdapter recur = new RecursoAdapter(data, token);
+                                if (!DetalleCursoActivity.this.isFinishing()) {
                                     rvContenido.setLayoutManager(new LinearLayoutManager(DetalleCursoActivity.this));
                                     rvContenido.setAdapter(recur);
                                 }
@@ -116,6 +115,11 @@ public class DetalleCursoActivity extends AppCompatActivity {
             startActivity(iback);
             finish();
         });
+    }
+    private void mostarNombres(){
+        txtNombreCurso.setText(fullname);
+        txtShortName.setText(shortname);
+        txtProfesor.setText(teachername);
     }
 
 }

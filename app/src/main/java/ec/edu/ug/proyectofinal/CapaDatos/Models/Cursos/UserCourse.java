@@ -6,7 +6,7 @@ public class UserCourse {
     private int id;
     private String fullname;
     private String shortname;
-    // Campo nuevo con su Getter y Setter
+
     private String teacherName = "Cargando...";
     // Getters y Setters
     public int getId() { return id; }

@@ -22,15 +22,9 @@ import ec.edu.ug.proyectofinal.R;
 public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.ViewHolder>{
 
     private List<UserCourse> listaCursos;
-    private OnItemClickListener listener;
 
-    public interface OnItemClickListener {
-        void onItemClick(UserCourse curso);
-    }
-
-    public CursoAdapter(List<UserCourse> listaCursos/*, OnItemClickListener listener*/) {
+    public CursoAdapter(List<UserCourse> listaCursos) {
         this.listaCursos = listaCursos;
-        //this.listener = listener;
     }
 
     @NonNull

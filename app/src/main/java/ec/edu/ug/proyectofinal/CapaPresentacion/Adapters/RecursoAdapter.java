@@ -1,5 +1,7 @@
 package ec.edu.ug.proyectofinal.CapaPresentacion.Adapters;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,11 @@ import ec.edu.ug.proyectofinal.R;
 
 public class RecursoAdapter extends RecyclerView.Adapter<RecursoAdapter.ViewHolder> {
     private List<Recursos.Modulo> mData;
+    private String token;
 
-    public RecursoAdapter(List<Recursos.Modulo> mData) {
+    public RecursoAdapter(List<Recursos.Modulo> mData, String token) {
         this.mData = mData;
+        this.token = token;
     }
 
     @NonNull
@@ -35,8 +39,9 @@ public class RecursoAdapter extends RecyclerView.Adapter<RecursoAdapter.ViewHold
             holder.tvNombreArchivo.setText(archivoFisico.filename);
 
             holder.itemView.setOnClickListener(v -> {
-                String urlDescarga = archivoFisico.fileurl;
-
+                String urlDescarga = archivoFisico.fileurl+"&token="+token;
+                Intent iRecurso = new Intent(Intent.ACTION_VIEW, Uri.parse(urlDescarga));
+                holder.itemView.getContext().startActivity(iRecurso);
             });
         } else {
             holder.tvNombreArchivo.setText("Archivo no disponible");
