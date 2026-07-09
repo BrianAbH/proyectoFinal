@@ -154,7 +154,6 @@ public class MoodleRepository {
 
     public void enviarRespuesta(String token, int forumid, String subject, String message, ApiListener<NuevaDiscusion> listener) {
         api.crearDiscusion(token, "mod_forum_add_discussion", "json", forumid, subject, message).enqueue(new Callback<NuevaDiscusion>() {
-
             @Override
             public void onResponse(Call<NuevaDiscusion> call, Response<NuevaDiscusion> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -164,7 +163,6 @@ public class MoodleRepository {
                     listener.onError("Error en el servidor: " + response.code());
                 }
             }
-
             @Override
             public void onFailure(Call<NuevaDiscusion> call, Throwable t) {
                 // Error de conexión o red

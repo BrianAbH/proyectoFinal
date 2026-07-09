@@ -1,14 +1,12 @@
 package ec.edu.ug.proyectofinal.CapaPresentacion;
 
-import static java.security.AccessController.getContext;
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +17,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
 import java.util.List;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.ForoResultados;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.NuevaDiscusion;
@@ -40,10 +40,12 @@ public class ForoActivity extends AppCompatActivity {
     private Button btnCancel, btnPublish;
     private ScrollView scrollView;
     private EditText etComment;
+    private ImageButton btnBack;
 
     private MoodleRepository moodle;
 
-    private List<ForoResultados.Discusio> listaRespuestas;
+    private List<ForoResultados.Discusio> listaRespuestas = new ArrayList<>();
+    private RespuestasAdapter respuestasAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,23 +55,20 @@ public class ForoActivity extends AppCompatActivity {
         obtenerIntents();
         iniciarComponentes();
         setearTextos();
-        mostrarRespuestas();
+        iniciarAdapter();
         eventos();
-
+        volver();
     }
 
     private void eventos(){
-        btnResponder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scrollView.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
-                    }
-                });
-                cardRespuesta.setVisibility(View.VISIBLE);
-            }
+        btnResponder.setOnClickListener(v-> {
+            scrollView.post(new Runnable() {
+                @Override
+                public void run() {
+                    scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            });
+            cardRespuesta.setVisibility(v.VISIBLE);
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +97,7 @@ public class ForoActivity extends AppCompatActivity {
         btnCancel = findViewById(R.id.btnCancel);
         btnPublish = findViewById(R.id.btnPublish);
         etComment = findViewById(R.id.etComment);
+        btnBack = findViewById(R.id.btnBack);
     }
 
     private void obtenerIntents(){
@@ -119,20 +119,21 @@ public class ForoActivity extends AppCompatActivity {
         tvRespuestas.setText(String.valueOf(respuestas));
     }
 
+    private void iniciarAdapter(){
+        rvRespuestas.setLayoutManager(new LinearLayoutManager(ForoActivity.this));
+        respuestasAdapter = new RespuestasAdapter(listaRespuestas);
+        rvRespuestas.setAdapter(respuestasAdapter);
+        mostrarRespuestas();
+    }
+
     private void mostrarRespuestas(){
         moodle.obtenerRespuestas(token, forumid, new ApiListener<List<ForoResultados.Discusio>>() {
             @Override
             public void onSuccess(List<ForoResultados.Discusio> data) {
                 try {
-                    if (data == null) return;
-
-                    listaRespuestas = data;
-
-                    RespuestasAdapter foros = new RespuestasAdapter(listaRespuestas);
-                    if (!ForoActivity.this.isFinishing()) {
-                        rvRespuestas.setLayoutManager(new LinearLayoutManager(ForoActivity.this));
-                        rvRespuestas.setAdapter(foros);
-                    }
+                    if (data == null || ForoActivity.this.isFinishing()) return;
+                    // Actualiza el adaptador con los nuevas respuestas
+                    respuestasAdapter.actualizarDatos(data);
                 } catch (Exception e) {
                     Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
                 }
@@ -152,7 +153,6 @@ public class ForoActivity extends AppCompatActivity {
             etComment.setError(getString(R.string.message_vali));
             return;
         }
-
         moodle.enviarRespuesta(token,forumid,titulo, message, new ApiListener<NuevaDiscusion>() {
             @Override
             public void onSuccess(NuevaDiscusion data) {
@@ -166,10 +166,9 @@ public class ForoActivity extends AppCompatActivity {
         });
     }
 
-    private void reiniciarActividad(){
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-        overridePendingTransition(0, 0);
+    private void volver(){
+        btnBack.setOnClickListener(v->{
+            finish();
+        });
     }
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.ForoResultados;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
 import ec.edu.ug.proyectofinal.R;
 
 public class RespuestasAdapter extends RecyclerView.Adapter<RespuestasAdapter.ViewHolder>{
@@ -19,7 +20,6 @@ public class RespuestasAdapter extends RecyclerView.Adapter<RespuestasAdapter.Vi
 
     public RespuestasAdapter(List<ForoResultados.Discusio> listaRespuestas) {
         this.listaRespuestas = listaRespuestas;
-        notifyDataSetChanged();
     }
 
     @NonNull @Override
@@ -32,7 +32,6 @@ public class RespuestasAdapter extends RecyclerView.Adapter<RespuestasAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ForoResultados.Discusio foros = listaRespuestas.get(position);
-
         holder.tvNombre.setText(foros.userfullname);
         holder.tvFecha.setText(foros.getfecha());
         holder.tvMensaje.setText(foros.getCleanmessage());
@@ -54,5 +53,11 @@ public class RespuestasAdapter extends RecyclerView.Adapter<RespuestasAdapter.Vi
             tvFecha = itemView.findViewById(R.id.tvtFecha);
             tvMensaje = itemView.findViewById(R.id.tvtMensaje);
         }
+    }
+
+    public void actualizarDatos(List<ForoResultados.Discusio> nuevasRespuestas) {
+        this.listaRespuestas.clear();
+        this.listaRespuestas.addAll(nuevasRespuestas);
+        notifyDataSetChanged(); // Notifica el cambio para redibujar la vista
     }
 }

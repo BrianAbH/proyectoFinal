@@ -1,5 +1,6 @@
 package ec.edu.ug.proyectofinal.CapaPresentacion.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,9 +20,9 @@ public class ForosAdapter extends RecyclerView.Adapter<ec.edu.ug.proyectofinal.C
     private String profesor;
 
     public ForosAdapter(List<Foros> listaForos, String profesor) {
-            this.listaForos = listaForos;
-            this.profesor = profesor;
-        }
+        this.listaForos = listaForos;
+        this.profesor = profesor;
+    }
 
     @NonNull @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -68,5 +69,11 @@ public class ForosAdapter extends RecyclerView.Adapter<ec.edu.ug.proyectofinal.C
             txtRespuestas = itemView.findViewById(R.id.txtRespuestas);
             txtFecha = itemView.findViewById(R.id.txtFecha);
         }
+    }
+
+    public void actualizarDatos(List<Foros> nuevosForos) {
+        this.listaForos.clear();
+        this.listaForos.addAll(nuevosForos);
+        notifyDataSetChanged(); // Notifica el cambio para redibujar la vista
     }
 }

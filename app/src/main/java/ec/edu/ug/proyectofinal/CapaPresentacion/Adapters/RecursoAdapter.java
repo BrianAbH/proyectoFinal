@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
 import ec.edu.ug.proyectofinal.R;
 
@@ -63,5 +64,11 @@ public class RecursoAdapter extends RecyclerView.Adapter<RecursoAdapter.ViewHold
             tvNombreRecurso = itemView.findViewById(R.id.txtTitulo);
             tvNombreArchivo = itemView.findViewById(R.id.txtTituloPdf);
         }
+    }
+
+    public void actualizarDatos(List<Recursos.Modulo> nuevaLista) {
+        this.mData.clear();
+        this.mData.addAll(nuevaLista);
+        notifyDataSetChanged();
     }
 }

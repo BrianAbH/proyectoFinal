@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
@@ -28,59 +29,106 @@ import ec.edu.ug.proyectofinal.CapaServicio.MoodleRepository;
 import ec.edu.ug.proyectofinal.R;
 
 public class DetalleCursoActivity extends AppCompatActivity {
-
+    // TextView para mostrar la información principal del curso
     private TextView txtNombreCurso, txtShortName, txtProfesor;
+
+    // Botón para regresar a la pantalla principal
     private ImageButton btnBack;
+
+    // Control de pestañas (Recursos, Foros, etc.)
     private TabLayout tabLayout;
+
+    // RecyclerView donde se mostrará el contenido de cada pestaña
     private RecyclerView rvContenido;
+
+    // Repositorio encargado de realizar las consultas a Moodle
     private MoodleRepository moodle;
 
-    private List<Recursos.Modulo> listaRecursos;
-    private List<Foros> listaForos;
+    // Adaptador y lista para mostrar los recursos del curso
+    private RecursoAdapter recursoAdapter;
+    private List<Recursos.Modulo> listaRecursos = new ArrayList<>();
 
+    // Adaptador y lista para mostrar los foros del curso
+    private ForosAdapter forosAdapter;
+    private List<Foros> listaForos = new ArrayList<>();
+
+    // Datos del curso y sesión del usuario
     private int idCourse;
     private String fullname, shortname, teachername, token;
+
+    // Preferencias compartidas donde se almacena el token de sesión
     private SharedPreferences preferences;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_curso);
+
+        // Inicializa el repositorio para consumir la API de Moodle
         moodle = new MoodleRepository();
+
+        // Obtiene los datos enviados desde la actividad anterior
         obtenerPreferences();
+
+        // Inicializa los componentes de la interfaz
         iniciarComponentes();
+
+        // Configura el botón de regreso
         volver();
+
+        // Muestra la información del curso en pantalla
         mostarNombres();
 
+        // Configura el RecyclerView y carga inicialmente los recursos
+        iniciarAdapters();
+
+        // Listener para detectar el cambio entre pestañas
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                //Tab Recursos
+                // Pestaña Tareas
                 if (tab.getPosition() == 0) {
 
-                } else if (tab.getPosition() == 1) {
+
+                }
+                // Pestaña Foros
+                else if (tab.getPosition() == 1) {
+                    // Cambia el adaptador del RecyclerView
+                    rvContenido.setAdapter(forosAdapter);
+                    // Obtiene y muestra los foros del curso
                     mostrarForos();
-                }else{
+
+                }
+                // Pestaña Recursos
+                else {
+                    rvContenido.setAdapter(recursoAdapter);
                     mostrarRecursos();
                 }
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
 
+        // Ajusta el padding para respetar las barras del sistema
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.detalle), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
     }
 
-    private void iniciarComponentes(){
+    /**
+     * Inicializa todos los componentes gráficos de la actividad.
+     */
+    private void iniciarComponentes() {
         txtNombreCurso = findViewById(R.id.txtNombreCurso);
         txtShortName = findViewById(R.id.txtShortName);
         txtProfesor = findViewById(R.id.txtProfesor);
@@ -89,18 +137,41 @@ public class DetalleCursoActivity extends AppCompatActivity {
         rvContenido = findViewById(R.id.rvContenido);
     }
 
-    private void mostrarRecursos(){
+    /**
+     * Configura el RecyclerView y los adaptadores.
+     * Inicialmente se muestran los recursos del curso.
+     */
+    private void iniciarAdapters() {
+
+        rvContenido.setLayoutManager(new LinearLayoutManager(this));
+
+        // Adaptador para los foros
+        forosAdapter = new ForosAdapter(listaForos, teachername);
+
+        // Adaptador para los recursos
+        recursoAdapter = new RecursoAdapter(listaRecursos, token);
+
+        // Se establece como adaptador inicial
+        rvContenido.setAdapter(recursoAdapter);
+
+        // Carga los recursos desde Moodle
+        mostrarRecursos();
+    }
+
+    /**
+     * Obtiene los recursos del curso desde Moodle
+     * y actualiza el RecyclerView.
+     */
+    private void mostrarRecursos() {
+
         moodle.obtenerRecursosCursos(token, idCourse, new ApiListener<List<Recursos.Modulo>>() {
             @Override
             public void onSuccess(List<Recursos.Modulo> data) {
                 try {
-                    if (data == null) return;
-                    listaRecursos = data;
-                    RecursoAdapter recur = new RecursoAdapter(data, token);
-                    if (!DetalleCursoActivity.this.isFinishing()) {
-                        rvContenido.setLayoutManager(new LinearLayoutManager(DetalleCursoActivity.this));
-                        rvContenido.setAdapter(recur);
-                    }
+                    // Verifica que existan datos y que la actividad siga abierta
+                    if (data == null || DetalleCursoActivity.this.isFinishing()) return;
+                    // Actualiza el adaptador con los nuevos foros
+                    recursoAdapter.actualizarDatos(data);
                 } catch (Exception e) {
                     Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
                 }
@@ -108,56 +179,68 @@ public class DetalleCursoActivity extends AppCompatActivity {
 
             @Override
             public void onError(String message) {
+                // Muestra el error recibido desde la API
                 Log.e("API_ERROR", message != null ? message : "Error desconocido");
             }
         });
     }
 
-    private void mostrarForos(){
-        moodle.obtenerForos(token,idCourse, new ApiListener<List<Foros>>() {
+    /**
+     * Obtiene los foros del curso desde Moodle
+     * y actualiza el RecyclerView.
+     */
+    private void mostrarForos() {
+        moodle.obtenerForos(token, idCourse, new ApiListener<List<Foros>>() {
             @Override
             public void onSuccess(List<Foros> data) {
                 try {
-                    if (data == null) return;
-                    listaForos = data;
-                    ForosAdapter foros = new ForosAdapter(listaForos,teachername);
-                    if (!DetalleCursoActivity.this.isFinishing()) {
-                        rvContenido.setLayoutManager(new LinearLayoutManager(DetalleCursoActivity.this));
-                        rvContenido.setAdapter(foros);
-                    }
+                    // Verifica que existan datos y que la actividad siga abierta
+                    if (data == null || DetalleCursoActivity.this.isFinishing()) return;
+                    // Actualiza el adaptador con los nuevos foros
+                    forosAdapter.actualizarDatos(data);
                 } catch (Exception e) {
                     Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
                 }
             }
-
             @Override
             public void onError(String message) {
                 Log.e("API_ERROR", message != null ? message : "Error desconocido");
             }
         });
-
     }
 
-    private void obtenerPreferences(){
-        idCourse = getIntent().getIntExtra("idCourse",0);
+    /**
+     * Obtiene la información del curso enviada mediante Intent
+     * y recupera el token almacenado en SharedPreferences.
+     */
+    private void obtenerPreferences() {
+        idCourse = getIntent().getIntExtra("idCourse", 0);
         fullname = getIntent().getStringExtra("fullname");
         shortname = getIntent().getStringExtra("shortname");
         teachername = getIntent().getStringExtra("teacher");
+        // Recupera el token de autenticación
         preferences = getSharedPreferences("SessionPrefs", MODE_PRIVATE);
-        token = preferences.getString("WSTOKEN","Valor por defecto");
+        token = preferences.getString("WSTOKEN", "Valor por defecto");
     }
 
-    private void volver(){
-        btnBack.setOnClickListener(v->{
-            Intent iback = new Intent(DetalleCursoActivity.this,MainActivity.class);
+    /**
+     * Configura el botón para regresar al menú principal.
+     */
+    private void volver() {
+        btnBack.setOnClickListener(v -> {
+            Intent iback = new Intent(DetalleCursoActivity.this, MainActivity.class);
             startActivity(iback);
             finish();
         });
     }
-    private void mostarNombres(){
+
+    /**
+     * Muestra el nombre completo del curso,
+     * su nombre corto y el profesor.
+     */
+    private void mostarNombres() {
         txtNombreCurso.setText(fullname);
         txtShortName.setText(shortname);
         txtProfesor.setText(teachername);
     }
-
 }

@@ -21,7 +21,7 @@ public class ForoResultados {
         public String getfecha(){
             java.util.Date date = new java.util.Date(created * 1000);
             java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
-            sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT+8"));
+            sdf.setTimeZone(java.util.TimeZone.getTimeZone("GMT-5"));
             String fechaFormateada = sdf.format(date);
             return fechaFormateada;
         }
