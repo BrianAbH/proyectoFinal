@@ -42,7 +42,6 @@ public class CursosActivity extends AppCompatActivity {
         repository = new MoodleRepository();
         cargarUsuario(getIntent().getStringExtra("WSTOKEN"));
 
-
         btnPerfil.setOnClickListener(v->{
             Intent iPerfil = new Intent(CursosActivity.this, PerfilActivity.class);
             iPerfil.putExtra("nombre", usuario.getUsername());

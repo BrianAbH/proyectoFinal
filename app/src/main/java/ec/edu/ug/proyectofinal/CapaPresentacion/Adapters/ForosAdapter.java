@@ -5,25 +5,22 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.card.MaterialCardView;
-
 import java.util.List;
 
-import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
-import ec.edu.ug.proyectofinal.CapaPresentacion.DetalleCursoActivity;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
+import ec.edu.ug.proyectofinal.CapaPresentacion.ForoActivity;
 import ec.edu.ug.proyectofinal.R;
 public class ForosAdapter extends RecyclerView.Adapter<ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.ForosAdapter.ViewHolder>{
-    private List<String> listaCursos;
+    private List<Foros> listaForos;
+    private String profesor;
 
-    public ForosAdapter(List<String> listaCursos) {
-            this.listaCursos = listaCursos;
+    public ForosAdapter(List<Foros> listaForos, String profesor) {
+            this.listaForos = listaForos;
+            this.profesor = profesor;
         }
 
     @NonNull @Override
@@ -35,25 +32,29 @@ public class ForosAdapter extends RecyclerView.Adapter<ec.edu.ug.proyectofinal.C
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String curso = listaCursos.get(position);
+        Foros foros = listaForos.get(position);
 
-        //holder.tvNombre.setText(curso.getFullname());
-
-        /*holder.itemView.setOnClickListener(v->{
+        holder.txtTitulo.setText(foros.getName());
+        holder.txtRespuestas.setText(String.valueOf(foros.getNumdiscussions()));
+        holder.txtProfesor.setText(profesor);
+        holder.txtFecha.setText(foros.getfecha());
+        holder.itemView.setOnClickListener(v->{
             Context contexto = v.getContext();
-            Intent iDetalle = new Intent(contexto, DetalleCursoActivity.class);
-            iDetalle.putExtra("idCourse",curso.getId());
-            iDetalle.putExtra("fullname",curso.getFullname());
-            iDetalle.putExtra("shortname",curso.getShortname());
-            iDetalle.putExtra("teacher",curso.getTeacherName());
+            Intent iDetalle = new Intent(contexto, ForoActivity.class);
+                iDetalle.putExtra("forumid",foros.getId());
+                iDetalle.putExtra("titulo",foros.getName());
+                iDetalle.putExtra("descripcion",foros.getCleanintro());
+                iDetalle.putExtra("profesor",profesor);
+                iDetalle.putExtra("fecha",foros.getfecha());
+                iDetalle.putExtra("respuestas",foros.getNumdiscussions());
             contexto.startActivity(iDetalle);
-        });*/
+        });
     }
 
 
     @Override
     public int getItemCount() {
-            return listaCursos.size();
+            return listaForos.size();
         }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

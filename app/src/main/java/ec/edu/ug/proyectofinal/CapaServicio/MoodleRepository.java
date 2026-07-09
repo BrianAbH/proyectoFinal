@@ -9,6 +9,9 @@ import java.util.List;
 
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.TeacherCourseResponse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.ForoResultados;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.NuevaDiscusion;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
 import ec.edu.ug.proyectofinal.CapaServicio.Listener.ApiListener;
@@ -113,4 +116,60 @@ public class MoodleRepository {
         });
     }
 
+    public void obtenerForos(String token, int forumid, ApiListener listener){
+        api.getForosCourse(token, "mod_forum_get_forums_by_courses", "json", forumid).enqueue(new Callback<Foros[]>() {
+            @Override
+            public void onResponse(Call<Foros[]> call, Response<Foros[]> response) {
+                if(response.isSuccessful() && response.body()!=null){
+                    listener.onSuccess(Arrays.asList(response.body()));
+                }else{
+                    listener.onError("Error " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<Foros[]> call, Throwable t) {
+                listener.onError(t.getMessage());
+            }
+        });
+    }
+
+
+    public void obtenerRespuestas(String token, int forumid, ApiListener<List<ForoResultados.Discusio>> listener){
+        api.getRespuestasForo(token, "mod_forum_get_forum_discussions", "json", forumid).enqueue(new Callback<ForoResultados.Respuesta>() {
+            @Override
+            public void onResponse(Call<ForoResultados.Respuesta> call, Response<ForoResultados.Respuesta> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    List<ForoResultados.Discusio> listaReal = response.body().discussions;
+                    listener.onSuccess(listaReal);
+                } else {
+                    listener.onError("Error " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<ForoResultados.Respuesta> call, Throwable t) {
+                listener.onError(t.getMessage());
+            }
+        });
+    }
+
+    public void enviarRespuesta(String token, int forumid, String subject, String message, ApiListener<NuevaDiscusion> listener) {
+        api.crearDiscusion(token, "mod_forum_add_discussion", "json", forumid, subject, message).enqueue(new Callback<NuevaDiscusion>() {
+
+            @Override
+            public void onResponse(Call<NuevaDiscusion> call, Response<NuevaDiscusion> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Si Moodle responde bien, le pasamos el objeto respuesta al listener
+                    listener.onSuccess(response.body());
+                } else {
+                    listener.onError("Error en el servidor: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NuevaDiscusion> call, Throwable t) {
+                // Error de conexión o red
+                listener.onError(t.getMessage());
+            }
+        });
+    }
 }

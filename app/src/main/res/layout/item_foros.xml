@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardForo"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="12dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="16dp"
     app:cardElevation="6dp">
 
@@ -19,6 +23,7 @@
             android:id="@+id/imgIcon"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:contentDescription="@string/icChat"
             android:src="@drawable/ic_forum"/>
 
         <!-- Título -->
@@ -27,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="¿Cuál es la diferencia entre Factory y Abstract Factory?"
             android:textColor="#212121"
             android:textSize="22sp"
             android:textStyle="bold" />
@@ -44,11 +48,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
+                    android:contentDescription="@string/contentPerfil"
                     android:src="@drawable/ic_profile"
                     android:backgroundTint="@color/background_light_gray"/>
 
@@ -57,7 +63,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Pedro García"
                     android:textColor="#757575"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -72,11 +77,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
+                    android:contentDescription="@string/icChat"
                     android:src="@drawable/ic_comment"
                     android:backgroundTint="@color/background_light_gray" />
 
@@ -85,7 +92,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="8 respuestas"
                     android:textColor="#757575"
                     android:textSize="14sp"/>
             </LinearLayout>
@@ -98,11 +104,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:contentDescription="@string/icCalendario"
                 android:src="@drawable/ic_schedule"
                 app:tint="#757575" />
 
@@ -111,10 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="15 de julio, 10:30"
                 android:textColor="#757575"
                 android:backgroundTint="@color/background_light_gray"/>
-
         </LinearLayout>
 
     </LinearLayout>

@@ -31,8 +31,23 @@
 
     <string name="contentBack">Volver a la pagina anterior</string>
     <string name="contentPerfil">Icono de un perfil</string>
+    <string name="icChat">Icono de un chat</string>
+    <string name="icCalendario">Icono de un Calendario</string>
 
     <string name="iconopdf">Icono PDF</string>
     <string name="pdf">PDF</string>
+
+    <string name="foro">Foro</string>
+    <string name="btn_Responder">Responder</string>
+
+    <string name="comment_dialog_title">Escribe tu respuesta</string>
+    <string name="comment_dialog_hint">Comparte tu opinión…</string>
+    <string name="comment_dialog_btn_cancel">Cancelar</string>
+    <string name="comment_dialog_btn_publish">Publicar</string>
+
+    <string name="message_vali">"Por favor, No puede enviar texto Vacio"</string>
+
+    <string name="disc_toast_success">"Discusión Enviada: "</string>
+    <string name="disc_toast_fall">"Error al enviar: "</string>
 
 </resources>

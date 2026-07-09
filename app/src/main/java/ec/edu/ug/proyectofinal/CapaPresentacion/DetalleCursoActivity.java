@@ -17,8 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
 import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.ForosAdapter;
 import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.RecursoAdapter;
@@ -35,6 +36,7 @@ public class DetalleCursoActivity extends AppCompatActivity {
     private MoodleRepository moodle;
 
     private List<Recursos.Modulo> listaRecursos;
+    private List<Foros> listaForos;
 
     private int idCourse;
     private String fullname, shortname, teachername, token;
@@ -43,14 +45,8 @@ public class DetalleCursoActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalle_curso);
-        idCourse = getIntent().getIntExtra("idCourse",0);
-        fullname = getIntent().getStringExtra("fullname");
-        shortname = getIntent().getStringExtra("shortname");
-        teachername = getIntent().getStringExtra("teacher");
-        preferences = getSharedPreferences("SessionPrefs", MODE_PRIVATE);
-        token = preferences.getString("WSTOKEN","Valor por defecto");
         moodle = new MoodleRepository();
-
+        obtenerPreferences();
         iniciarComponentes();
         volver();
         mostarNombres();
@@ -118,12 +114,37 @@ public class DetalleCursoActivity extends AppCompatActivity {
     }
 
     private void mostrarForos(){
-        List<String> lista = new ArrayList<>();
-        lista.add("Ana");
-        lista.add("Juan");
-        lista.add("Pedro");
-        ForosAdapter foro = new ForosAdapter(lista);
+        moodle.obtenerForos(token,idCourse, new ApiListener<List<Foros>>() {
+            @Override
+            public void onSuccess(List<Foros> data) {
+                try {
+                    if (data == null) return;
+                    listaForos = data;
+                    ForosAdapter foros = new ForosAdapter(listaForos,teachername);
+                    if (!DetalleCursoActivity.this.isFinishing()) {
+                        rvContenido.setLayoutManager(new LinearLayoutManager(DetalleCursoActivity.this));
+                        rvContenido.setAdapter(foros);
+                    }
+                } catch (Exception e) {
+                    Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
+                }
+            }
 
+            @Override
+            public void onError(String message) {
+                Log.e("API_ERROR", message != null ? message : "Error desconocido");
+            }
+        });
+
+    }
+
+    private void obtenerPreferences(){
+        idCourse = getIntent().getIntExtra("idCourse",0);
+        fullname = getIntent().getStringExtra("fullname");
+        shortname = getIntent().getStringExtra("shortname");
+        teachername = getIntent().getStringExtra("teacher");
+        preferences = getSharedPreferences("SessionPrefs", MODE_PRIVATE);
+        token = preferences.getString("WSTOKEN","Valor por defecto");
     }
 
     private void volver(){

@@ -2,7 +2,6 @@ package ec.edu.ug.proyectofinal.CapaDatos.Models;
 
 import java.util.List;
 public class Recursos {
-
     public static class Seccion {
         public int id;
         public String name;
