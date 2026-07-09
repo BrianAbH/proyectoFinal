@@ -4,6 +4,7 @@ import java.util.List;
 
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.TeacherCourseResponse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Cursos.UserCourse;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
 import retrofit2.Call;
@@ -43,6 +44,13 @@ public interface MoodleApiService {
             @Query("courseid") int idCourse
     );
 
+    @GET("webservice/rest/server.php")
+    Call<List<Foros>> getForosCourse(
+            @Query("wstoken") String token,
+            @Query("wsfunction") String function,
+            @Query("moodlewsrestformat") String format,
+            @Query("courseids[0]") int idCourse
+    );
 
 
 }

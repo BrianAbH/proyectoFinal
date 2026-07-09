@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 import java.util.List;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
+import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.ForosAdapter;
 import ec.edu.ug.proyectofinal.CapaPresentacion.Adapters.RecursoAdapter;
 import ec.edu.ug.proyectofinal.CapaServicio.Listener.ApiListener;
 import ec.edu.ug.proyectofinal.CapaServicio.MoodleRepository;
@@ -57,31 +60,12 @@ public class DetalleCursoActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
 
                 //Tab Recursos
-                if (tab.getPosition() == 2) {
-                    moodle.obtenerRecursosCursos(token, idCourse, new ApiListener<List<Recursos.Modulo>>() {
-                        @Override
-                        public void onSuccess(List<Recursos.Modulo> data) {
-                            try {
-                                if (data == null) return;
-                                listaRecursos = data;
-                                RecursoAdapter recur = new RecursoAdapter(data, token);
-                                if (!DetalleCursoActivity.this.isFinishing()) {
-                                    rvContenido.setLayoutManager(new LinearLayoutManager(DetalleCursoActivity.this));
-                                    rvContenido.setAdapter(recur);
-                                }
-                            } catch (Exception e) {
-                                Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
-                            }
-                        }
+                if (tab.getPosition() == 0) {
 
-                        @Override
-                        public void onError(String message) {
-                            Log.e("API_ERROR", message != null ? message : "Error desconocido");
-                        }
-                    });
-
-                } else {
-                    Log.e("API_ERROR", "Error desconocido");
+                } else if (tab.getPosition() == 1) {
+                    mostrarForos();
+                }else{
+                    mostrarRecursos();
                 }
             }
 
@@ -107,6 +91,39 @@ public class DetalleCursoActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         tabLayout = findViewById(R.id.tabLayout);
         rvContenido = findViewById(R.id.rvContenido);
+    }
+
+    private void mostrarRecursos(){
+        moodle.obtenerRecursosCursos(token, idCourse, new ApiListener<List<Recursos.Modulo>>() {
+            @Override
+            public void onSuccess(List<Recursos.Modulo> data) {
+                try {
+                    if (data == null) return;
+                    listaRecursos = data;
+                    RecursoAdapter recur = new RecursoAdapter(data, token);
+                    if (!DetalleCursoActivity.this.isFinishing()) {
+                        rvContenido.setLayoutManager(new LinearLayoutManager(DetalleCursoActivity.this));
+                        rvContenido.setAdapter(recur);
+                    }
+                } catch (Exception e) {
+                    Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
+                }
+            }
+
+            @Override
+            public void onError(String message) {
+                Log.e("API_ERROR", message != null ? message : "Error desconocido");
+            }
+        });
+    }
+
+    private void mostrarForos(){
+        List<String> lista = new ArrayList<>();
+        lista.add("Ana");
+        lista.add("Juan");
+        lista.add("Pedro");
+        ForosAdapter foro = new ForosAdapter(lista);
+
     }
 
     private void volver(){
