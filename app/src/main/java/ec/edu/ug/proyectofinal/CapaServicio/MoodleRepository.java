@@ -37,7 +37,6 @@ public class MoodleRepository {
                     listener.onError("Error " + response.code());
                 }
             }
-
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 listener.onError(t.getMessage());
