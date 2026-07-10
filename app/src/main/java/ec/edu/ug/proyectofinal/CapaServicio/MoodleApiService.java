@@ -8,12 +8,17 @@ import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.Foros;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.ForoResultados;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.NuevaDiscusion;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Recursos;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Tareas.AssignmentResponse;
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Tareas.UploadResponse;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.User;
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface MoodleApiService {
@@ -75,6 +80,42 @@ public interface MoodleApiService {
             @Field("forumid") int forumId,
             @Field("subject") String subject,
             @Field("message") String message
+    );
+
+    @GET("webservice/rest/server.php")
+    Call<AssignmentResponse> getAssignments(
+            @Query("wstoken") String token,
+            @Query("wsfunction") String function,
+            @Query("moodlewsrestformat") String format,
+            @Query("courseids[0]") int courseId
+    );
+
+    @POST("webservice/rest/server.php")
+    Call<Object> submitAssignment(
+            @Query("wstoken") String token,
+            @Query("wsfunction") String function,
+            @Query("moodlewsrestformat") String format,
+            @Query("assignmentid") int assignmentId,
+
+            @Query("plugindata[onlinetext_editor][text]")
+            String text,
+
+            @Query("plugindata[onlinetext_editor][format]")
+            int textFormat,
+
+            @Query("plugindata[onlinetext_editor][itemid]")
+            int onlineTextItemId,
+
+            @Query("plugindata[files_filemanager]")
+            int fileItemId
+    );
+
+    @Multipart
+    @POST("webservice/upload.php")
+    Call<List<UploadResponse>> uploadFile(
+            @Query("token") String token,
+            @Query("filepath") String filepath,
+            @Part MultipartBody.Part file
     );
 
 

@@ -17,6 +17,7 @@
         <activity android:name=".CapaPresentacion.DetalleCursoActivity"/>
         <activity android:name=".CapaPresentacion.PerfilActivity"/>
         <activity android:name=".CapaPresentacion.ForoActivity"/>
+        <activity android:name=".CapaPresentacion.EnviarTareaActivity"/>
         <activity
             android:name=".CapaPresentacion.MainActivity" android:exported="true">
             <intent-filter>
