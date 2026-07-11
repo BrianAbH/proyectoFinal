@@ -2,7 +2,7 @@
 
 ## 📱 Descripción General
 
-Aplicación Android nativa desarrollada para la **Universidad de Guayaquil** que proporciona una interfaz móvil para acceder a la plataforma Moodle. La app permite a estudiantes y docentes gestionar cursos, tareas, foros y su perfil académico directamente desde dispositivos móviles.
+Aplicación Android nativa desarrollada para la **Universidad de Gotitas del Saber** que proporciona una interfaz móvil para acceder a la plataforma Moodle. La app permite a estudiantes gestionar cursos, tareas, foros y su perfil académico directamente desde dispositivos móviles.
 
 ## 🎯 Características Principales
 
