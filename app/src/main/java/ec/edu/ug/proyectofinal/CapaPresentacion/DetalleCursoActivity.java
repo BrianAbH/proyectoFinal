@@ -53,8 +53,12 @@ public class DetalleCursoActivity extends AppCompatActivity {
 
     // Adaptador y lista para mostrar los foros del curso
     private ForosAdapter forosAdapter;
-    private TareaAdapter tareaAdapter;
     private List<Foros> listaForos = new ArrayList<>();
+
+    //Adaptador y lista para mostrar las tareas del curso
+    private TareaAdapter tareaAdapter;
+    private List<Tarea> listaTarea = new ArrayList<>();
+
     // Datos del curso y sesión del usuario
     private int idCourse;
     private String fullname, shortname, teachername, token;
@@ -133,18 +137,15 @@ public class DetalleCursoActivity extends AppCompatActivity {
      * Inicialmente se muestran los recursos del curso.
      */
     private void iniciarAdapters() {
-
         rvContenido.setLayoutManager(new LinearLayoutManager(this));
-
+        // Adaptador para las tareas
+        tareaAdapter = new TareaAdapter(listaTarea);
         // Adaptador para los foros
         forosAdapter = new ForosAdapter(listaForos, teachername);
-
         // Adaptador para los recursos
         recursoAdapter = new RecursoAdapter(listaRecursos, token);
-
         // Se establece como adaptador inicial
-        rvContenido.setAdapter(recursoAdapter);
-
+        rvContenido.setAdapter(tareaAdapter);
         // Carga los recursos desde Moodle
         cargarTareas();
     }
@@ -156,7 +157,6 @@ public class DetalleCursoActivity extends AppCompatActivity {
 
     private void cargarTareas() {
         moodle.obtenerTareas(token, idCourse, new ApiListener<List<Tarea>>() {
-
             @Override
             public void onSuccess(List<Tarea> data) {
                 if (data == null) {return;}
@@ -164,9 +164,8 @@ public class DetalleCursoActivity extends AppCompatActivity {
                     Toast.makeText(DetalleCursoActivity.this, "Este curso no tiene tareas", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                tareaAdapter = new TareaAdapter(data);
+                tareaAdapter.actualizarDatos(data);
             }
-
             @Override
             public void onError(String message) {
                 Toast.makeText(DetalleCursoActivity.this, "No se pudieron cargar las tareas", Toast.LENGTH_LONG).show();
@@ -174,7 +173,6 @@ public class DetalleCursoActivity extends AppCompatActivity {
         });
     }
     private void mostrarRecursos() {
-
         moodle.obtenerRecursosCursos(token, idCourse, new ApiListener<List<Recursos.Modulo>>() {
             @Override
             public void onSuccess(List<Recursos.Modulo> data) {
@@ -185,7 +183,6 @@ public class DetalleCursoActivity extends AppCompatActivity {
                     Log.e("CRASH_UI", "Error al actualizar el RecyclerView", e);
                 }
             }
-
             @Override
             public void onError(String message) {
                 Log.e("API_ERROR", message != null ? message : "Error desconocido");

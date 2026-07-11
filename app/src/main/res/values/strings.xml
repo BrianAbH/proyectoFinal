@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">proyectoFinal</string>
+    <string name="app_name">MoodleApp</string>
 
     <!--Pantalla de Bienvenida-->
     <string name="welcome_title">MoodleApp</string>
@@ -49,5 +49,23 @@
 
     <string name="disc_toast_success">"Discusión Enviada: "</string>
     <string name="disc_toast_fall">"Error al enviar: "</string>
+
+    <string name="text_entregar">Entregar</string>
+
+    <string name="enviar_tarea">Enviar tarea</string>
+
+    <string name="tipo_entrega">Tipo de entrega</string>
+
+    <string name="respuesta_texto">Respuesta de texto</string>
+
+    <string name="hint_respuesta">Escribe tu respuesta...</string>
+
+    <string name="archivo_adjunto">Archivo adjunto</string>
+
+    <string name="seleccionar_archivo">Seleccionar archivo</string>
+
+    <string name="sin_archivo">Sin archivo seleccionado</string>
+
+    <string name="error_configuracion">Esta tarea no tiene habilitado un tipo de entrega compatible.</string>
 
 </resources>

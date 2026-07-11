@@ -40,4 +40,11 @@
     <color name="background">#F5F5F5</color>
     <color name="tabGray">#9E9E9E</color>
 
+    <color name="orange_primary">#FFA000</color>
+    <color name="orange_dark">#F57C00</color>
+
+    <color name="backgroundCard">#F8F9FB</color>
+    <color name="card_stroke">#E5E5E5</color>
+
+
 </resources>

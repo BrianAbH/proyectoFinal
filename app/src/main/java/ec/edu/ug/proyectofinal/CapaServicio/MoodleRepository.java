@@ -177,73 +177,8 @@ public class MoodleRepository {
         });
     }
 
-    public void guardarEntrega(String token, int assignmentId, String texto, int fileItemId, ApiListener<Object> listener) {
-        String textoSeguro = texto != null ? texto : "";
-
-        api.submitAssignment(token, "mod_assign_save_submission", "json", assignmentId, textoSeguro, 1, 0, fileItemId).enqueue(new Callback<Object>() {
-
-            @Override
-            public void onResponse(Call<Object> call, Response<Object> response) {
-                if (!response.isSuccessful()) {
-                    listener.onError("Error HTTP al guardar entrega: " + response.code());
-                    return;
-                }
-
-                Log.d("MOODLE_SUBMISSION", "Entrega guardada correctamente");
-
-                listener.onSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Object> call, Throwable throwable) {
-                Log.e("MOODLE_SUBMISSION", "Error al guardar entrega", throwable);
-
-                listener.onError(throwable.getMessage() != null ? throwable.getMessage() : "Error de conexión");
-            }
-        });
-    }
-
-    public void subirArchivo(String token, MultipartBody.Part file, ApiListener<Integer> listener) {
-        api.uploadFile(token, "/", file).enqueue(new Callback<List<UploadResponse>>() {
-
-            @Override
-            public void onResponse(Call<List<UploadResponse>> call, Response<List<UploadResponse>> response) {
-                if (!response.isSuccessful()) {
-                    listener.onError("Error HTTP al subir archivo: " + response.code());
-                    return;
-                }
-
-                List<UploadResponse> archivos = response.body();
-
-                if (archivos == null || archivos.isEmpty()) {
-                    listener.onError("Moodle no devolvió información del archivo");
-                    return;
-                }
-
-                UploadResponse archivo = archivos.get(0);
-
-                if (archivo.getItemid() <= 0) {
-                    listener.onError("Moodle devolvió un itemid inválido");
-                    return;
-                }
-
-                Log.d("MOODLE_UPLOAD", "Archivo subido. Nombre: " + archivo.getFilename() + ", itemid: " + archivo.getItemid());
-
-                listener.onSuccess(archivo.getItemid());
-            }
-
-            @Override
-            public void onFailure(Call<List<UploadResponse>> call, Throwable throwable) {
-                Log.e("MOODLE_UPLOAD", "Error al subir archivo", throwable);
-
-                listener.onError(throwable.getMessage() != null ? throwable.getMessage() : "Error de conexión al subir archivo");
-            }
-        });
-    }
-
     public void obtenerTareas(String token, int courseId, ApiListener<List<Tarea>> listener) {
         api.getAssignments(token, "mod_assign_get_assignments", "json", courseId).enqueue(new Callback<AssignmentResponse>() {
-
             @Override
             public void onResponse(Call<AssignmentResponse> call, Response<AssignmentResponse> response) {
                 if (!response.isSuccessful()) {
@@ -313,4 +248,70 @@ public class MoodleRepository {
             }
         });
     }
+
+    public void guardarEntrega(String token, int assignmentId, String texto, int fileItemId, ApiListener<Object> listener) {
+        String textoSeguro = texto != null ? texto : "";
+
+        api.submitAssignment(token, "mod_assign_save_submission", "json", assignmentId, textoSeguro, 1, 0, fileItemId).enqueue(new Callback<Object>() {
+
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                if (!response.isSuccessful()) {
+                    listener.onError("Error HTTP al guardar entrega: " + response.code());
+                    return;
+                }
+
+                Log.d("MOODLE_SUBMISSION", "Entrega guardada correctamente");
+
+                listener.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable throwable) {
+                Log.e("MOODLE_SUBMISSION", "Error al guardar entrega", throwable);
+
+                listener.onError(throwable.getMessage() != null ? throwable.getMessage() : "Error de conexión");
+            }
+        });
+    }
+
+    public void subirArchivo(String token, MultipartBody.Part file, ApiListener<Integer> listener) {
+        api.uploadFile(token, "/", file).enqueue(new Callback<List<UploadResponse>>() {
+
+            @Override
+            public void onResponse(Call<List<UploadResponse>> call, Response<List<UploadResponse>> response) {
+                if (!response.isSuccessful()) {
+                    listener.onError("Error HTTP al subir archivo: " + response.code());
+                    return;
+                }
+
+                List<UploadResponse> archivos = response.body();
+
+                if (archivos == null || archivos.isEmpty()) {
+                    listener.onError("Moodle no devolvió información del archivo");
+                    return;
+                }
+
+                UploadResponse archivo = archivos.get(0);
+
+                if (archivo.getItemid() <= 0) {
+                    listener.onError("Moodle devolvió un itemid inválido");
+                    return;
+                }
+
+                Log.d("MOODLE_UPLOAD", "Archivo subido. Nombre: " + archivo.getFilename() + ", itemid: " + archivo.getItemid());
+
+                listener.onSuccess(archivo.getItemid());
+            }
+
+            @Override
+            public void onFailure(Call<List<UploadResponse>> call, Throwable throwable) {
+                Log.e("MOODLE_UPLOAD", "Error al subir archivo", throwable);
+
+                listener.onError(throwable.getMessage() != null ? throwable.getMessage() : "Error de conexión al subir archivo");
+            }
+        });
+    }
+
+
 }

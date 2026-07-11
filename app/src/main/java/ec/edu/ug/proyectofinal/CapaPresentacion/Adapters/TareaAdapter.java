@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import ec.edu.ug.proyectofinal.CapaDatos.Models.Foros.ForoResultados;
 import ec.edu.ug.proyectofinal.CapaDatos.Models.Tareas.Tarea;
 import ec.edu.ug.proyectofinal.CapaPresentacion.EnviarTareaActivity;
 import ec.edu.ug.proyectofinal.R;
@@ -107,5 +108,11 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.ViewHolder> 
 
             btnEntregar = itemView.findViewById(R.id.btnEntregar);
         }
+    }
+
+    public void actualizarDatos(List<Tarea> nuevasTareas) {
+        this.lista.clear();
+        this.lista.addAll(nuevasTareas);
+        notifyDataSetChanged(); // Notifica el cambio para redibujar la vista
     }
 }

@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#F8F9FB">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,69 +14,89 @@
             android:id="@+id/txtTituloEnviar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enviar tarea"
-            android:textSize="22sp"
+            android:textColor="#212121"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtTipoEntrega"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Tipo de entrega"
+            android:layout_marginTop="10dp"
+            android:textColor="#757575"
             android:textSize="15sp" />
 
+        <!-- Respuesta -->
         <LinearLayout
             android:id="@+id/contenedorTexto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:elevation="2dp"
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Respuesta de texto"
+                android:text="@string/respuesta_texto"
+                android:textColor="#212121"
                 android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtTexto"
                 android:layout_width="match_parent"
                 android:layout_height="140dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
+                android:autofillHints=""
+                android:background="@android:drawable/edit_text"
                 android:gravity="top|start"
-                android:hint="Escribe tu respuesta..."
+                android:hint="@string/hint_respuesta"
                 android:inputType="textMultiLine"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E" />
 
         </LinearLayout>
 
+        <!-- Archivo -->
         <LinearLayout
             android:id="@+id/contenedorArchivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:elevation="2dp"
+            android:padding="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Archivo adjunto"
+                android:text="@string/archivo_adjunto"
+                android:textColor="#212121"
                 android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnArchivo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Seleccionar archivo" />
+                android:layout_height="48dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#FFA000"
+                android:text="@string/seleccionar_archivo"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtFile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Sin archivo seleccionado" />
+                android:layout_marginTop="10dp"
+                android:text="Sin archivo seleccionado"
+                android:textColor="#757575"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -87,14 +106,21 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Esta tarea no tiene habilitado un tipo de entrega compatible."
+            android:textColor="#D32F2F"
+            android:textStyle="bold"
             android:visibility="gone" />
 
         <Button
             android:id="@+id/btnEnviar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_marginTop="28dp"
-            android:text="Enviar tarea" />
+            android:backgroundTint="#FFA000"
+            android:text="@string/enviar_tarea"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
